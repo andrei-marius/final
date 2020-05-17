@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --white: #fff;
+  --black: #333;
+  --grey: #999;
+  --blue: #0779e4;
+  --ice-blue: #dcf3ff;
+  --red:  #cc0000;
+}
+
+.nav-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  -webkit-box-shadow: 0 4px 6px -6px #222;
+  -moz-box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
+  /* border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  background-color: var(--ice-blue); */
+}
+
+.nav-bar {
+  list-style: none;
+}
+
+.nav-bar li {
+  display: inline;
+  position: relative;
+}
+
+.nav-bar li a {
+  text-decoration: none;
+  margin-left: 40px;
+  color: var(--black);
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 600;
+}
+
+.nav-bar li a:after {
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: var(--black);
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.nav-bar li a:hover {
+  color: var(--blue);
+}
+
+.nav-bar li a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.nav-bar li a:focus {
+  color: var(--blue);
+}
+
+.nav-bar li a:focus:after {
+  width: 100%;
+  left: 0;
+  color: var(--blue);
+}
+
+.right-side ul {
+  list-style: none;
+}
+
+.right-side ul li {
+  display: inline;
+  position: relative;
+}
+
+.right-side ul li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 600;
+  color: var(--blue);
+  margin-right: 40px;
+  padding: 5px 5px;
+}
+
+.right-side ul li a,
+.right-side ul li a::after {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.right-side ul li a::before,
+.right-side ul li a::after {
+  background: var(--blue);
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+.right-side ul li a {
+  color: var(--blue);
+}
+
+.right-side ul li a:hover {
+  color: var(--white);
+}
+
+.right-side ul li a::after {
+  height: 0;
+  left: 50%;
+  top: 50%;
+  width: 0;
+}
+
+.right-side ul li a:hover:after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.log-out {
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  margin-right: 40px;
+}
+
+.log-out:hover {
+  color: var(--blue);
+}

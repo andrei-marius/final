@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --white: #fff;
+    --black: #333;
+    --grey: #999;
+    --blue: #0779e4;
+    --ice-blue: #dcf3ff;
+    --red:  #cc0000;
+}
+
+.sidebar {
+    width: 80px;
+    height: 400px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.linkedin {
+    filter: invert(46%) sepia(83%) saturate(6604%) hue-rotate(182deg) brightness(90%) contrast(101%);
+}
+
+.behance {
+    filter: invert(35%) sepia(90%) saturate(4455%) hue-rotate(214deg) brightness(102%) contrast(102%);
+}
+
+.github {
+    filter: invert(0%) sepia(11%) saturate(13%) hue-rotate(319deg) brightness(103%) contrast(82%);
+}
+
+.gmail {
+    filter: invert(40%) sepia(31%) saturate(1595%) hue-rotate(326deg) brightness(94%) contrast(96%);
+}
+
+.facebook {
+    filter: invert(41%) sepia(89%) saturate(4707%) hue-rotate(205deg) brightness(100%) contrast(91%);
+}
+
+.icons {
+    width: 40px;
+    cursor: pointer;
+}
