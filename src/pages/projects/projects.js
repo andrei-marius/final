@@ -14,9 +14,10 @@ class Projects extends React.Component {
       show: false,
       title: '',
       description: '',
+      image: null,
       btnLoading: false,
       currentIdLoading: undefined,
-      image: null
+      admin: false
     };
   }
 
@@ -31,8 +32,11 @@ class Projects extends React.Component {
     }).then(res => res.json()).then(data => {
         this.setState({
           isLoaded: true,
-          projects: data
+          projects: data,
         });
+        if(localStorage.getItem('userID') === '5ebda67f00aa16790000d9e9') {
+          this.setState({admin: true});
+        }
       },
       (error) => {
         this.setState({
@@ -59,7 +63,6 @@ class Projects extends React.Component {
       },
       body: formData
     }).then(res => res.json()).then(data => {
-      console.log(this.state.title, this.state.description, data.ids[0])
       fetch("https://final-b8cc.restdb.io/rest/projects", {
         method: 'POST',
         headers: {  
@@ -79,14 +82,7 @@ class Projects extends React.Component {
         newProjects.unshift(newProject);
         this.setState({projects: newProjects});
         toastr.success('New project added');
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      }
-    )
+      })
     })
   }
 
@@ -109,23 +105,30 @@ class Projects extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, projects, btnLoading, currentIdLoading } = this.state;
+    const { error, isLoaded, projects, btnLoading, currentIdLoading, admin } = this.state;
     toastr.options = toastrSetup;
 
     const style = {
-      defaultBtn : {
-        filter: 'brightness(1)',
-        cursor: 'initial'
-    },
-      closeBtnContainer : {
-        margin: '0',
+      centeredTxt: {
+        textAlign: 'center'
+      },
+      closeBtnContainer: {
+        position: 'relative',
+        marginBottom: '45px'
+      },
+      closeBtn: {
         position: 'absolute',
-        bottom: '15px'
-    }
+        right: '0'
+      },
+      deleteBtnContainer: {
+        position: 'absolute',
+        bottom: '0px',
+        padding: '15px'
+      }
   }
 
     if(error) {
-      return <div style={{textAlign: 'center'}}>Error: {error.message}</div>;
+      return <div style={style.centeredTxt}>Error: {error.message}</div>;
     } else if(!isLoaded) {
       return (
         <div className={classes.loader}></div>
@@ -133,36 +136,36 @@ class Projects extends React.Component {
     } else {
     return (
       <div className={classes['middle-section']}>
-        <div className={classes['add-container']}>
-          <div className={classes['add-btn-container']}>
-            {this.state.show ? <button style={style.defaultBtn} onClick={()=>{this.setState({show: true})}}><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-              : <button onClick={()=>{this.setState({show: true})}}><i className="fa fa-plus-circle" aria-hidden="true"></i></button>}
+        {admin ? <div className={classes['add-container']}>
+          {this.state.show ? null : <div className={classes['add-btn-container']}>
+            <button onClick={()=>{this.setState({show: true})}}><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
             <span>add project</span>
-          </div>
+          </div>}
           {this.state.show ? <div className={classes['data-container']}>
-            <div className={classes['close-btn-container']}>
-            <button onClick={()=>{this.setState({show: false})}}><i className="fa fa-times" aria-hidden="true"></i></button>
+            <div style={style.closeBtnContainer} className={classes['close-btn-container']}>
+            <button style={style.closeBtn} onClick={()=>{this.setState({show: false})}}><i className="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <input onChange={this.handleChange} value={this.state.title} type="text" name="title" placeholder="Title"></input>
-            <textarea onChange={this.handleChange} value={this.state.description} name="description" placeholder="Description ..."></textarea>
+            <input onChange={this.handleChange} value={this.state.description} name="description" placeholder="Description ..."></input>
             <input onChange={e => this.setState({ image: e.target.files[0] })} type="file"  accept="image/*" name="image"></input>
             <div className={classes['submit-btn-container']}>
-              <button onClick={this.addProject}>{btnLoading ? <i className="fa fa-circle-o-notch fa-spin"></i> : 'submit'}</button>
+              <button onClick={this.addProject}>{btnLoading ? <i className="fa fa-circle-o-notch fa-spin"></i> : 'add project'}</button>
             </div>
           </div> : null}
-        </div>
+        </div> : null}
       {projects.map(project => (
           <div className={classes.project} key={project._id}>
             <div className={classes['img-container']}>
               <img src={'https://final-b8cc.restdb.io/media/' + project.image} alt="project illustration"></img>
             </div>
             <div className={classes['txt-container']}>
-              <div>{project.title}</div>
-              <div>{project.description}</div>
+              <h1>{project.title}</h1>
+              <p>{project.description}</p>
             </div>
-            <div className={classes['close-btn-container']} style={style.closeBtnContainer}>
-              <button onClick={() => this.removeProject(project._id)}>{currentIdLoading && currentIdLoading === project._id ? <i className="fa fa-circle-o-notch fa-spin"></i> : <i className="fa fa-times" aria-hidden="true"></i>}</button>
-            </div>
+            {admin ? <div className={classes['close-btn-container']} style={style.deleteBtnContainer}>
+              <button onClick={() => this.removeProject(project._id)}>{currentIdLoading && currentIdLoading === project._id ? <i className="fa fa-circle-o-notch fa-spin"></i> 
+                : <i className="fa fa-times" aria-hidden="true"></i>}</button>
+            </div> : null}
           </div>
       ))}
       </div>

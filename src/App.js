@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import classes from'./App.module.css';
-import Home from './pages/home/home';
-import Projects from './pages/projects/projects';
-import Tasks from './pages/tasks/tasks';
-import Login from './pages/login/login';
-import Signup from './pages/signup/signup';
+import Home from './pages/home/Home';
+import Projects from './pages/projects/Projects';
+import Tasks from './pages/tasks/Tasks';
+import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
 import Notfound from './helpers/notfound';
 import toastr from 'toastr';
 import toastrSetup from './helpers/toastr/toastr';
@@ -40,43 +40,43 @@ class App extends React.Component {
 
     return (
       <Router>
-      <div>
-        <div className={classes['nav-bar-container']}>
-          <div className={classes['left-side']}>
-            <ul className={classes['nav-bar']}>
+        <div>
+          <div className={classes['nav-bar-container']}>
+            <div className={classes['left-side']}>
+              <ul className={classes['nav-bar']}>
+                <li>
+                  <Link to='/'>home</Link>
+                </li>
+                <li>
+                  <Link to='/projects'>projects</Link>
+                </li>
+                <li>
+                  <Link to='/tasks'>tasks</Link>
+                </li>
+              </ul>
+            </div>
+            <div className={classes['right-side']}>
+            {this.state.isLogged ? <Link to='/' onClick={this.clear} className={classes['log-out']}>log out</Link>
+              : <ul>
               <li>
-                <Link to={'/'}>home</Link>
+                <Link to='/login'>log in</Link> 
               </li>
               <li>
-                <Link to={'/projects'}>projects</Link>
-              </li>
-              <li>
-                <Link to={'/tasks'}>tasks</Link>
-              </li>
-            </ul>
+                <Link to='/signup'>sign up</Link>
+              </li>            
+            </ul> }
+            </div>
           </div>
-          <div className={classes['right-side']}>
-           {this.state.isLogged ? <button onClick={this.clear} className={classes['log-out']}>log out</button>
-            : <ul>
-            <li>
-              <Link to={'/login'}>log in</Link> 
-            </li>
-            <li>
-              <Link to={'/signup'}>sign up</Link>
-            </li>            
-          </ul> }
-          </div>
+          <Switch>
+            <Route exact path='/' component={props => <Home onRedirect={() => this.handleLogged()} {...props} />} />
+            <Route path='/projects' component={Projects} />
+            <Route path='/tasks' component={Tasks} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route component={Notfound} />
+          </Switch>
         </div>
-        <Switch>
-          <Route exact path='/' component={props => <Home onRedirect={() => this.handleLogged()} {...props} />} />
-          <Route path='/projects' component={Projects} />
-          <Route path='/tasks' component={Tasks} />
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={Signup} />
-          <Route component={Notfound} />
-        </Switch>
-      </div>
-    </Router>
+      </Router>
     )
   }
 }

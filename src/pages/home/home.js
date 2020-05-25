@@ -18,7 +18,6 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1 style={{textAlign: "center"}}>Home</h1>
         <div className={classes.sidebar}>
           <div className={classes['contact-container']}>
             <img className={classes.linkedin + ' ' + classes.icons} src={linkedin} alt="linkedin icon"></img>

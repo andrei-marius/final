@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './signup.module.css';
 import toastr from 'toastr';
 import toastrSetup from '../../helpers/toastr/toastr';
-import '../../helpers/toastr/toastr.css'
+import '../../helpers/toastr/toastr.css';
 
 class Signup extends React.Component {
     constructor(props) {
@@ -49,11 +49,11 @@ class Signup extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         if(this.state.username.length < 6) {
-          toastr.error('Username must have at least 6 characters')
+          toastr.error('Username must have at least 6 characters');
         } else if(this.state.password.length < 6) {
-          toastr.error('Password must have at least 6 characters')
+          toastr.error('Password must have at least 6 characters');
         } else if(this.state.repeatpw !== this.state.password) {
-          toastr.error('Repeated password is incorrect')
+          toastr.error('Repeated password is incorrect');
         } else {
         this.newUser();
         }
@@ -76,7 +76,7 @@ class Signup extends React.Component {
                 </div>
                 <div className={classes.group}>
                     <input onChange={this.handleChange} value={this.state.repeatpw} type="password" name="repeatpw" required/>
-                    <label>Repeat Password</label>
+                    <label>Repeat password</label>
                 </div>
                 <div className={classes.group}>
                     <input onChange={this.handleChange} value={this.state.email} type="email" name="email" required/>

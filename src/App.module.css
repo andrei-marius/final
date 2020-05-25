@@ -136,9 +136,8 @@
   text-transform: uppercase;
   font-weight: 600;
   cursor: pointer;
-  background: none;
-  outline: none;
-  border: none;
+  text-decoration: none;
+  color: var(--black);
   font-size: 16px;
   margin-right: 40px;
 }
