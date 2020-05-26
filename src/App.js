@@ -10,6 +10,7 @@ import Notfound from './helpers/notfound';
 import toastr from 'toastr';
 import toastrSetup from './helpers/toastr/toastr';
 import './helpers/toastr/toastr.css';
+import logo from './assets/img/logo.svg';
 
 class App extends React.Component {
   constructor(props) {
@@ -54,6 +55,9 @@ class App extends React.Component {
                   <Link to='/tasks'>tasks</Link>
                 </li>
               </ul>
+            </div>
+            <div className={classes['logo-container']}>
+              <img src={logo} alt='logo'></img>
             </div>
             <div className={classes['right-side']}>
             {this.state.isLogged ? <Link to='/' onClick={this.clear} className={classes['log-out']}>log out</Link>

@@ -157,19 +157,31 @@
     margin: 8px;
     min-height: 350px;
     position: relative;
+    height: 550px;
 }
 
 .img-container {
     width: 100%;
-    background-color: var(--blue);
+    background-color: var(--ice-blue);
 }
 
 .project div img {
     width: 100%;
+    min-height: 350px;
+    max-height: 350px;
+    object-fit: contain;
+    display: block;
 }
 
 .txt-container {
     padding: 10px;
+    text-align: justify;
+    max-height: 150px;
+    overflow: scroll;
+}
+
+.txt-container::-webkit-scrollbar {
+    width: 0px;
 }
 
 .txt-container h1, p {
@@ -178,6 +190,7 @@
 
 .txt-container h1 {
     font-size: 20px;
+    margin-bottom: 8px;
 }
 
 @media only screen and (min-width: 430px) {

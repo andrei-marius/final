@@ -176,18 +176,18 @@ class Tasks extends React.Component {
             </div>
           </div> : null}
           </div>
-          {tasks.map(task => (
-            <div className={classes.task} key={task._id}>
+          {tasks.filter(task => task.userId === localStorage.getItem('userID')).map(filteredTask => (
+            <div className={classes.task} key={filteredTask._id}>
               <div className={classes['close-btn-container']} style={style.deleteBtnContainer}>
-                <button style={style.deleteBtn} onClick={() => {this.removeTask(task._id)}}>{currentIdLoading === task._id ? <i className="fa fa-circle-o-notch fa-spin"></i> 
+                <button style={style.deleteBtn} onClick={() => {this.removeTask(filteredTask._id)}}>{currentIdLoading === filteredTask._id ? <i className="fa fa-circle-o-notch fa-spin"></i> 
                  : <i className="fa fa-times" aria-hidden="true"></i>}</button>
               </div>
-              <h1>{task.title}</h1>
-              <p>{task.description}</p>
-              <img className={classes['small-img']} onClick={() => {this.makeImgBig(task._id)}} src={'https://final-b8cc.restdb.io/media/' + task.image} alt='problem illustration'></img>
-              {imgClicked === task._id && bigImg ? <div className={classes['modal']}>
+              <h1>{filteredTask.title}</h1>
+              <p>{filteredTask.description}</p>
+              <img className={classes['small-img']} onClick={() => {this.makeImgBig(filteredTask._id)}} src={'https://final-b8cc.restdb.io/media/' + filteredTask.image} alt='problem illustration'></img>
+              {imgClicked === filteredTask._id && bigImg ? <div className={classes['modal']}>
                   <ClickAwayListener onClickAway={() => {this.setState({bigImg: false})}}>
-                    <img className={classes['big-img']} src={'https://final-b8cc.restdb.io/media/' + task.image} alt='problem illustration'></img>
+                    <img className={classes['big-img']} src={'https://final-b8cc.restdb.io/media/' + filteredTask.image} alt='problem illustration'></img>
                   </ClickAwayListener>
                 </div>
                : null}
