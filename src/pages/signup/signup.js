@@ -65,7 +65,25 @@ class Signup extends React.Component {
 
     handleSubmit = e => {
       e.preventDefault();
-      this.newUser();
+      const { username, email, users } = this.state;
+      
+      const usernameTaken = users.find(user => user.username === username);
+      const emailTaken = users.find(user => user.email === email);
+      
+      if (usernameTaken) {
+        toastr.error('Username is already taken')
+      } else if (emailTaken) {
+        toastr.error('Email is already taken')
+      } else if (this.state.username.length < 6) {
+        toastr.error('Username must have at least 6 characters');
+      } else if (this.state.password.length < 6) {
+        toastr.error('Password must have at least 6 characters');
+      } else if (this.state.repeatpw !== this.state.password) {
+        toastr.error('Repeated password is incorrect');
+      } else {
+        this.newUser();
+        this.props.history.push("/login");
+      }
     }
     
   render() {
