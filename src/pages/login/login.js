@@ -45,11 +45,11 @@ class Login extends React.Component {
 
     this.handleLogin(users => {
       const foundUsername = users.find(user => user.username === username);
-      if(!foundUsername) return toastr.error('Incorrect username');
+      if (!foundUsername) return toastr.error('Incorrect username');
       const user = users.find(user => user.username === username && user.password === password);
       user ? toastr.success('Logged in') : toastr.error('Incorrect password');
       localStorage.setItem("userID", user._id);
-      this.setState({isLoggedIn: true});
+      this.setState({ isLoggedIn: true });
       this.props.history.push("/", { logged: true });
     });
   }

@@ -113,6 +113,7 @@
     font-size: 16px;
     border-radius: 5px;
     padding: 5px;
+    outline: none;
 }
 
 .data-container input:focus {
@@ -193,7 +194,7 @@
     width: 90%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     padding: 5px;
-    margin: 10px auto 10px auto;
+    margin: 10px auto 50px auto;
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
@@ -222,23 +223,6 @@
 .add-comment-container button i {
     font-size: 20px;
     color: var(--blue);
-}
-
-.load {
-    text-transform: uppercase;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    background-color: var(--blue);
-    width: 150px;
-    padding: 7px;
-    color: var(--white);
-    font-weight: 600;
-    border-radius: 5px;
-}
-
-.load:hover {
-    filter: brightness(1.1);
 }
 
 @media only screen and (min-width: 430px) {

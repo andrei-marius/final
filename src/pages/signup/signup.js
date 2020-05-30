@@ -48,8 +48,9 @@ class Signup extends React.Component {
             email: this.state.email
           })
         }).then(res => res.json()).then(data => {
-          this.setState({btnLoading: false});
-          toastr.success('Account successfully created');
+          this.setState({ btnLoading: false });
+          this.props.history.push("/login");
+          toastr.success('You can now log in', 'Account successfully created');
           if (data.hasOwnProperty('_id')) {
             console.log('Success!');
           } else {
@@ -82,7 +83,6 @@ class Signup extends React.Component {
         toastr.error('Repeated password is incorrect');
       } else {
         this.newUser();
-        this.props.history.push("/login");
       }
     }
     

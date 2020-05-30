@@ -20,11 +20,21 @@ class Home extends React.Component {
       <div>
         <div className={classes.sidebar}>
           <div className={classes['contact-container']}>
-            <img className={classes.linkedin + ' ' + classes.icons} src={linkedin} alt="linkedin icon"></img>
-            <img className={classes.behance + ' ' + classes.icons} src={behance} alt="behance icon"></img>
-            <img className={classes.github + ' ' + classes.icons} src={github} alt="github icon"></img>
-            <img className={classes.gmail + ' ' + classes.icons} src={gmail} alt="gmail icon"></img>
-            <img className={classes.facebook + ' ' + classes.icons} src={facebook} alt="facebook icon"></img>
+            <a href='https://www.linkedin.com/in/mihail-sebastian-rotar-92464a101/' target='_blank'>
+            <img className={classes.linkedin + ' ' + classes.icons} src={linkedin} alt='linkedin icon'></img>
+            </a>
+            <a href='https://www.behance.net/rotarsebastian' target='_blank'>
+            <img className={classes.behance + ' ' + classes.icons} src={behance} alt='behance icon'></img>
+            </a>
+            <a href='https://github.com/rotarsebastian' target='_blank'>
+            <img className={classes.github + ' ' + classes.icons} src={github} alt='github icon'></img>
+            </a>
+            <a href='https://www.linkedin.com/in/mihail-sebastian-rotar-92464a101/' target='_blank'>
+            <img className={classes.gmail + ' ' + classes.icons} src={gmail} alt='gmail icon'></img>
+            </a>
+            <a href='https://www.facebook.com/RotarSebastian1' target='_blank'>
+            <img className={classes.facebook + ' ' + classes.icons} src={facebook} alt='facebook icon'></img>
+            </a>
           </div>
         </div>
       </div>

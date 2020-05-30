@@ -55,7 +55,6 @@ class Tasks extends React.Component {
         } else {
           this.setState({ tasks: data.filter(task => task.userId === this.state.userId) })
         }
-        console.log('Admin:', this.state.admin);
     },
       (error) => {
         this.setState({
@@ -72,7 +71,7 @@ class Tasks extends React.Component {
   }
 
   addTask = () => {
-      this.setState({addLoading: true});
+      this.setState({ addLoading: true });
       const formData = new FormData();
       formData.append('image', this.state.image, this.state.image.name);
       fetch("https://final-b8cc.restdb.io/media", {
@@ -96,20 +95,20 @@ class Tasks extends React.Component {
           userId: this.state.userId
         })
       }).then(res => res.json()).then(data => {
-        this.setState({addLoading: false});
+        this.setState({ addLoading: false });
         const newTasks = [ ...this.state.tasks ];
         const newTask = { _id: data._id, title: data.title, description: data.description, image: data.image };
         newTasks.unshift(newTask);
-        this.setState({tasks: newTasks});
+        this.setState({ tasks: newTasks });
         toastr.success('New task added');
       })
     })
   }
 
   checkTask = () => {
-    if(this.state.title.length < 5) {
+    if (this.state.title.length < 5) {
       toastr.error('Title must have at least 5 characters');
-    } else if(this.state.description.length < 10) {
+    } else if (this.state.description.length < 10) {
       toastr.error('Description must have at least 10 characters');
     } else {
       this.addTask();
@@ -117,7 +116,7 @@ class Tasks extends React.Component {
   }
 
   removeTask = _id => {
-    this.setState({removeLoading: _id});
+    this.setState({ removeLoading: _id });
     fetch("https://final-b8cc.restdb.io/rest/tasks/" + _id, {
       method: "DELETE",
       headers: {
@@ -137,8 +136,7 @@ class Tasks extends React.Component {
   makeImgBig = _id => this.setState({ imgClicked: _id, imgBig: true });
 
   // addComment = _id => {
-  //   console.log(_id)
-  //   this.setState({commLoading: true});
+  //   this.setState({ commLoading: true });
   //   fetch('https://final-b8cc.restdb.io/rest/tasks/' + _id + '/comments', {
   //     method: 'POST',
   //     headers: {
@@ -151,11 +149,11 @@ class Tasks extends React.Component {
   //       userId: this.state.userId
   //     })
   //   }).then(res => res.json()).then(data => {
-  //     this.setState({commLoading: false});
+  //     this.setState({ commLoading: false });
   //     const newComments = [ ...this.state.comments ];
   //     const newComment = { _id: data._id, userId: data.userId, comment: data.comment };
   //     newComments.unshift(newComment);
-  //     this.setState({comments: newComments});
+  //     this.setState({ comments: newComments });
   //     toastr.success('New comment added');
   //   })
   // }
@@ -202,7 +200,7 @@ class Tasks extends React.Component {
             (
               <div className={classes['add-btn-container']}>
                 <button 
-                  onClick={() => {this.setState({show: true})}}
+                  onClick={() => {this.setState({ show: true })}}
                 >
                   <i className="fa fa-plus-circle" aria-hidden="true"></i>
                 </button>
@@ -256,10 +254,16 @@ class Tasks extends React.Component {
           tasks.map(filteredTask => (
           <React.Fragment key={filteredTask._id}>
             <div className={classes.task}>
-
               <div className={classes['close-btn-container']} style={style.deleteBtnContainer}>
-                <button style={style.deleteBtn} onClick={() => {this.removeTask(filteredTask._id)}}>{removeLoading === filteredTask._id ? <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> 
-                : <i className="fa fa-times" aria-hidden="true"></i>}</button>
+                <button style={style.deleteBtn} onClick={() => this.removeTask(filteredTask._id)}>
+                  {
+                    removeLoading === filteredTask._id 
+                    ? 
+                    <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> 
+                    : 
+                    <i className="fa fa-times" aria-hidden="true"></i>
+                  }
+                </button>
               </div>
 
               <h1>{filteredTask.title}</h1>
@@ -272,7 +276,7 @@ class Tasks extends React.Component {
                 imgClicked === filteredTask._id && imgBig 
                 ? 
                 <div className={classes['modal']}>
-                  <ClickAwayListener onClickAway={() => {this.setState({imgBig: false})}}>
+                  <ClickAwayListener onClickAway={() => {this.setState({ imgBig: false })}}>
                     <img 
                       className={classes['big-img']} 
                       src={'https://final-b8cc.restdb.io/media/' + filteredTask.image} alt='problem illustration'

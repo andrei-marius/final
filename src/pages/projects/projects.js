@@ -14,7 +14,7 @@ class Projects extends React.Component {
       show: false,
       title: '',
       description: '',
-      image: null,
+      image: undefined,
       addLoading: false,
       removeLoading: undefined,
       admin: false
@@ -35,7 +35,7 @@ class Projects extends React.Component {
           projects: data,
         });
         if (localStorage.getItem('userID') === '5ebda67f00aa16790000d9e9') {
-          this.setState({admin: true});
+          this.setState({ admin: true });
         }
       },
       (error) => {
@@ -53,7 +53,7 @@ class Projects extends React.Component {
   }
 
   addProject = () => {
-    this.setState({addLoading: true});
+    this.setState({ addLoading: true });
     const formData = new FormData();
     formData.append('image', this.state.image, this.state.image.name);
     fetch("https://final-b8cc.restdb.io/media", {
@@ -76,11 +76,11 @@ class Projects extends React.Component {
           image: data.ids[0]
         })
       }).then(res => res.json()).then(data => {
-        this.setState({addLoading: false})
+        this.setState({ addLoading: false })
         const newProjects = [ ...this.state.projects ];
         const newProject = { _id: data._id, title: data.title, description: data.description, image: data.image };
         newProjects.unshift(newProject);
-        this.setState({projects: newProjects});
+        this.setState({ projects: newProjects });
         toastr.success('New project added');
       })
     })
@@ -138,12 +138,12 @@ class Projects extends React.Component {
       <div className={classes['middle-section']}>
         {admin ? <div className={classes['add-container']}>
           {this.state.show ? null : <div className={classes['add-btn-container']}>
-            <button onClick={()=>{this.setState({show: true})}}><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
+            <button onClick={() => this.setState({ show: true })}><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
             <span>add project</span>
           </div>}
           {this.state.show ? <div className={classes['data-container']}>
             <div style={style.closeBtnContainer} className={classes['close-btn-container']}>
-            <button style={style.closeBtn} onClick={()=>{this.setState({show: false})}}><i className="fa fa-times" aria-hidden="true"></i></button>
+            <button style={style.closeBtn} onClick={() => this.setState({ show: false })}><i className="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <input onChange={this.handleChange} value={this.state.title} type="text" name="title" placeholder="Title"></input>
             <input onChange={this.handleChange} value={this.state.description} name="description" placeholder="Description ..."></input>
@@ -156,7 +156,9 @@ class Projects extends React.Component {
       {projects.map(project => (
           <div className={classes.project} key={project._id}>
             <div className={classes['img-container']}>
-              <img src={'https://final-b8cc.restdb.io/media/' + project.image} alt="project illustration"></img>
+              <a href={project.link} target='_blank'>
+                <img src={'https://final-b8cc.restdb.io/media/' + project.image} alt="project illustration"></img>
+              </a>
             </div>
             <div className={classes['hide-scroll-bar']}>
               <div className={classes['txt-container']}>
