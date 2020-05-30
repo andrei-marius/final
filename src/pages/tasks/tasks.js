@@ -17,17 +17,15 @@ class Tasks extends React.Component {
       title: '',
       description: '',
       addLoading: false,
-      image: null,
+      image: undefined,
       removeLoading: undefined,
       imgBig: false,
       imgClicked: undefined,
       userId: localStorage.getItem('userID'),
-      comments: [],
-      comment: '',
-      commLoading: false,
-      taskId: '',
-      loadingComms: false,
-      admin: false
+      admin: false,
+      // comments: [],
+      // comment: '',
+      // commLoading: false,
     };
   }
 
@@ -40,17 +38,17 @@ class Tasks extends React.Component {
         "cache-control": "no-cache"
       }
     }).then(res => res.json()).then(data => {
-      fetch('https://final-b8cc.restdb.io/rest/tasks/' + data[0]._id + '/comments', {
-        method: 'GET',
-        headers: {  
-          "Content-Type": "application/json; charset=uf-8",
-          "x-apikey": "5eb41a9ba020071c9ca8135c",
-          "cache-control": "no-cache"
-        }
-      }).then(res => res.json()).then(comments => {
+      // fetch('https://final-b8cc.restdb.io/rest/tasks/' + data[0]._id + '/comments', {
+      //   method: 'GET',
+      //   headers: {  
+      //     "Content-Type": "application/json; charset=uf-8",
+      //     "x-apikey": "5eb41a9ba020071c9ca8135c",
+      //     "cache-control": "no-cache"
+      //   }
+      // }).then(res => res.json()).then(comments => {
         this.setState({
-          comments,
-          isLoaded: true,
+          // comments,
+          isLoaded: true
         });
         if (localStorage.getItem('userID') === '5ebda67f00aa16790000d9e9') {
           this.setState({ admin: true, tasks: data });
@@ -58,7 +56,6 @@ class Tasks extends React.Component {
           this.setState({ tasks: data.filter(task => task.userId === this.state.userId) })
         }
         console.log(this.state.admin);
-      });
     },
       (error) => {
         this.setState({
@@ -139,32 +136,32 @@ class Tasks extends React.Component {
 
   makeImgBig = _id => this.setState({ imgClicked: _id, imgBig: true });
 
-  addComment = _id => {
-    console.log(_id)
-    this.setState({commLoading: true});
-    fetch('https://final-b8cc.restdb.io/rest/tasks/' + _id + '/comments', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "x-apikey": "5eb41a9ba020071c9ca8135c",
-        "cache-control": "no-cache"
-      },
-      body: JSON.stringify({
-        comment: this.state.comment,
-        userId: this.state.userId
-      })
-    }).then(res => res.json()).then(data => {
-      this.setState({commLoading: false});
-      const newComments = [ ...this.state.comments ];
-      const newComment = { _id: data._id, userId: data.userId, comment: data.comment };
-      newComments.unshift(newComment);
-      this.setState({comments: newComments});
-      toastr.success('New comment added');
-    })
-  }
+  // addComment = _id => {
+  //   console.log(_id)
+  //   this.setState({commLoading: true});
+  //   fetch('https://final-b8cc.restdb.io/rest/tasks/' + _id + '/comments', {
+  //     method: 'POST',
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "x-apikey": "5eb41a9ba020071c9ca8135c",
+  //       "cache-control": "no-cache"
+  //     },
+  //     body: JSON.stringify({
+  //       comment: this.state.comment,
+  //       userId: this.state.userId
+  //     })
+  //   }).then(res => res.json()).then(data => {
+  //     this.setState({commLoading: false});
+  //     const newComments = [ ...this.state.comments ];
+  //     const newComment = { _id: data._id, userId: data.userId, comment: data.comment };
+  //     newComments.unshift(newComment);
+  //     this.setState({comments: newComments});
+  //     toastr.success('New comment added');
+  //   })
+  // }
 
   render() {
-    const { error, isLoaded, tasks, addLoading, removeLoading, imgBig, imgClicked, userId, commLoading, loadingComms, comments } = this.state;
+    const { error, isLoaded, tasks, addLoading, removeLoading, imgBig, imgClicked, userId } = this.state;
     toastr.options = toastrSetup;
 
     const style = {
@@ -287,34 +284,19 @@ class Tasks extends React.Component {
               }
             </div>
 
+            <Comment text={'comment'} />
+            <Comment text={'another comment'} />
+
             <div className={classes['add-comment-container']}>
               <input 
-                onChange={this.handleChange} 
-                value={this.state.comment} 
                 type='text' 
                 name='comment' 
                 placeholder='Comment ...'
               />
-              <button onClick={() => this.addComment(filteredTask._id)}>
-                { 
-                  commLoading 
-                  ? 
-                  <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
-                  :
-                  <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                }
-              </button>
-
+              <button><i className="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
           </React.Fragment>
         ))}
-        { 
-          loadingComms 
-          ? 
-          null 
-          : 
-          comments.map(comment => <Comment key={comment._id} text={comment.comment} />
-        )}
       </div>
     )
   }

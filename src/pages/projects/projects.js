@@ -34,7 +34,7 @@ class Projects extends React.Component {
           isLoaded: true,
           projects: data,
         });
-        if(localStorage.getItem('userID') === '5ebda67f00aa16790000d9e9') {
+        if (localStorage.getItem('userID') === '5ebda67f00aa16790000d9e9') {
           this.setState({admin: true});
         }
       },
