@@ -82,6 +82,7 @@
     width: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     padding: 15px 25px 15px 25px;
+    border-radius: 5px;
 }
 
 .close-btn-container {
@@ -109,7 +110,9 @@
     width: 100%;
     border: 1px solid var(--grey);
     margin-top: 5px;
-    font-size: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .data-container input:focus {
@@ -131,6 +134,7 @@
     padding: 10px;
     color: var(--white);
     font-weight: 600;
+    border-radius: 5px;
 }
 
 .submit-btn-container button:hover {
@@ -146,14 +150,12 @@
     padding: 25px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-}
-
-.task:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
 }
 
 .task h1 {
     font-size: 20px;
+    margin-bottom: 5px;
 }
 
 .task h1, p {
@@ -162,7 +164,7 @@
 
 .small-img {
     width: 100%;
-    max-width: 350px;
+    max-width: 150px;
     margin-top: 10px;
     cursor: pointer;
 }
@@ -184,6 +186,58 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.add-comment-container {
+    width: 90%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 5px;
+    margin: 10px auto 10px auto;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.add-comment-container input {
+    outline: none;
+    border: none;
+    width: 97%;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.add-comment-container button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.add-comment-container button:hover {
+    filter: brightness(1.5);
+}
+
+.add-comment-container button i {
+    font-size: 20px;
+    color: var(--blue);
+}
+
+.load {
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: var(--blue);
+    width: 150px;
+    padding: 7px;
+    color: var(--white);
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.load:hover {
+    filter: brightness(1.1);
 }
 
 @media only screen and (min-width: 430px) {

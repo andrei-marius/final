@@ -15,8 +15,8 @@ class Projects extends React.Component {
       title: '',
       description: '',
       image: null,
-      btnLoading: false,
-      currentIdLoading: undefined,
+      addLoading: false,
+      removeLoading: undefined,
       admin: false
     };
   }
@@ -53,7 +53,7 @@ class Projects extends React.Component {
   }
 
   addProject = () => {
-    this.setState({btnLoading: true});
+    this.setState({addLoading: true});
     const formData = new FormData();
     formData.append('image', this.state.image, this.state.image.name);
     fetch("https://final-b8cc.restdb.io/media", {
@@ -76,7 +76,7 @@ class Projects extends React.Component {
           image: data.ids[0]
         })
       }).then(res => res.json()).then(data => {
-        this.setState({btnLoading: false})
+        this.setState({addLoading: false})
         const newProjects = [ ...this.state.projects ];
         const newProject = { _id: data._id, title: data.title, description: data.description, image: data.image };
         newProjects.unshift(newProject);
@@ -87,7 +87,7 @@ class Projects extends React.Component {
   }
 
   removeProject = (_id) => {
-    this.setState({ currentIdLoading: _id });
+    this.setState({ removeLoading: _id });
     fetch("https://final-b8cc.restdb.io/rest/projects/" + _id, {
       method: "DELETE",
       headers: {
@@ -99,13 +99,13 @@ class Projects extends React.Component {
       const newProjects = [ ...this.state.projects ];
       const indexToRemove = newProjects.findIndex(project => project._id === _id);
       newProjects.splice(indexToRemove, 1);
-      this.setState({ projects: newProjects, currentIdLoading: undefined });
+      this.setState({ projects: newProjects, removeLoading: undefined });
       toastr.success('Project removed');
     })
   }
 
   render() {
-    const { error, isLoaded, projects, btnLoading, currentIdLoading, admin } = this.state;
+    const { error, isLoaded, projects, addLoading, removeLoading, admin } = this.state;
     toastr.options = toastrSetup;
 
     const style = {
@@ -114,7 +114,7 @@ class Projects extends React.Component {
       },
       closeBtnContainer: {
         position: 'relative',
-        marginBottom: '45px'
+        marginBottom: '41px'
       },
       closeBtn: {
         position: 'absolute',
@@ -123,7 +123,7 @@ class Projects extends React.Component {
       deleteBtnContainer: {
         position: 'absolute',
         bottom: '0px',
-        padding: '15px'
+        padding: '13px'
       }
   }
 
@@ -149,7 +149,7 @@ class Projects extends React.Component {
             <input onChange={this.handleChange} value={this.state.description} name="description" placeholder="Description ..."></input>
             <input onChange={e => this.setState({ image: e.target.files[0] })} type="file"  accept="image/*" name="image"></input>
             <div className={classes['submit-btn-container']}>
-              <button onClick={this.addProject}>{btnLoading ? <i className="fa fa-circle-o-notch fa-spin"></i> : 'add project'}</button>
+              <button onClick={this.addProject}>{addLoading ? <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> : 'add project'}</button>
             </div>
           </div> : null}
         </div> : null}
@@ -158,12 +158,14 @@ class Projects extends React.Component {
             <div className={classes['img-container']}>
               <img src={'https://final-b8cc.restdb.io/media/' + project.image} alt="project illustration"></img>
             </div>
-            <div className={classes['txt-container']}>
-              <h1>{project.title}</h1>
-              <p>{project.description}</p>
+            <div className={classes['hide-scroll-bar']}>
+              <div className={classes['txt-container']}>
+                <h1>{project.title}</h1>
+                <p>{project.description}</p>
+              </div>
             </div>
             {admin ? <div className={classes['close-btn-container']} style={style.deleteBtnContainer}>
-              <button onClick={() => this.removeProject(project._id)}>{currentIdLoading && currentIdLoading === project._id ? <i className="fa fa-circle-o-notch fa-spin"></i> 
+              <button onClick={() => this.removeProject(project._id)}>{removeLoading === project._id ? <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> 
                 : <i className="fa fa-times" aria-hidden="true"></i>}</button>
             </div> : null}
           </div>

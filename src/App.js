@@ -21,19 +21,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if(localStorage.getItem('userID') !== null) this.setState({ isLogged: true });
+    if (localStorage.getItem('userID') !== null) this.setState({ isLogged: true });
     else this.setState({ isLogged: false });
   }
 
   clear = () => {
     localStorage.clear();
-    this.setState({isLogged: false});
+    this.setState({ isLogged: false });
     toastr.success('Logged out');
   }
 
   handleLogged = () => {
     const { isLogged } = this.state;
-    if(!isLogged) this.setState({ isLogged: true });
+    if (!isLogged) this.setState({ isLogged: true });
   }
 
   render() {

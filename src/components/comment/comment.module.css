@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --white: #fff;
+    --black: #333;
+    --grey: #999;
+    --blue: #0779e4;
+    --ice-blue: #dcf3ff;
+    --red:  #d9534f;
+}
+
+.comment-container {
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 20px 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+.comment-container p {
+    word-wrap: break-word;
+}
+
+@media only screen and (min-width: 768px) {
+    .comment-container {
+        width: 70%;
+    }
+}

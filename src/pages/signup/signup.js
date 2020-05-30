@@ -3,6 +3,7 @@ import classes from './signup.module.css';
 import toastr from 'toastr';
 import toastrSetup from '../../helpers/toastr/toastr';
 import '../../helpers/toastr/toastr.css';
+import { withRouter } from 'react-router-dom';
 
 class Signup extends React.Component {
     constructor(props) {
@@ -12,8 +13,24 @@ class Signup extends React.Component {
           password: '',
           repeatpw: '',
           email: '',
-          btnLoading: false
+          btnLoading: false,
+          users: []
         }
+    }
+
+    componentDidMount() {
+      fetch("https://final-b8cc.restdb.io/rest/userlist", {
+        method: 'GET',
+        headers: {  
+          "Content-Type": "application/json; charset=uf-8",
+          "x-apikey": "5eb41a9ba020071c9ca8135c",
+          "cache-control": "no-cache"
+        }
+      }).then(res => res.json()).then(data => {
+          this.setState({
+            users: data
+          });
+      })
     }
             
     newUser = () => {
@@ -32,8 +49,8 @@ class Signup extends React.Component {
           })
         }).then(res => res.json()).then(data => {
           this.setState({btnLoading: false});
-          toastr.success('Account succesfully created');
-          if(data.hasOwnProperty('_id')) {
+          toastr.success('Account successfully created');
+          if (data.hasOwnProperty('_id')) {
             console.log('Success!');
           } else {
             console.log('Error');
@@ -47,16 +64,25 @@ class Signup extends React.Component {
     }
 
     handleSubmit = e => {
-        e.preventDefault();
-        if(this.state.username.length < 6) {
-          toastr.error('Username must have at least 6 characters');
-        } else if(this.state.password.length < 6) {
-          toastr.error('Password must have at least 6 characters');
-        } else if(this.state.repeatpw !== this.state.password) {
-          toastr.error('Repeated password is incorrect');
-        } else {
+      e.preventDefault();
+      const { username, email, users } = this.state;
+      
+      const usernameTaken = users.find(user => user.username === username);
+      const emailTaken = users.find(user => user.email === email);
+      if (usernameTaken) {
+        toastr.error('Username is already taken')
+      } else if (emailTaken) {
+        toastr.error('Email is already taken')
+      } else if (this.state.username.length < 6) {
+        toastr.error('Username must have at least 6 characters');
+      } else if (this.state.password.length < 6) {
+        toastr.error('Password must have at least 6 characters');
+      } else if (this.state.repeatpw !== this.state.password) {
+        toastr.error('Repeated password is incorrect');
+      } else {
         this.newUser();
-        }
+        this.props.history.push("/login");
+      }
     }
     
   render() {
@@ -89,4 +115,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);
