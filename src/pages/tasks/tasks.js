@@ -50,12 +50,12 @@ class Tasks extends React.Component {
           // comments,
           isLoaded: true
         });
-        if (localStorage.getItem('userID') === '5ebda67f00aa16790000d9e9') {
+        if (this.state.userId === '5ebda67f00aa16790000d9e9') {
           this.setState({ admin: true, tasks: data });
         } else {
           this.setState({ tasks: data.filter(task => task.userId === this.state.userId) })
         }
-        console.log(this.state.admin);
+        console.log('Admin:', this.state.admin);
     },
       (error) => {
         this.setState({
