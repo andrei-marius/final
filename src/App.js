@@ -40,7 +40,7 @@ class App extends React.Component {
     toastr.options = toastrSetup;
 
     return (
-      <Router>
+      <Router basename="/andrei/final">
         <div>
           <div className={classes['nav-bar-container']}>
             <div className={classes['left-side']}>

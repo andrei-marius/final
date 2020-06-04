@@ -1,6 +1,7 @@
 {
   "name": "routing",
   "version": "0.1.0",
+  "homepage": "http://quickcocktails.dk/andrei/final/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.14",
