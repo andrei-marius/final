@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
 import classes from'./App.module.css';
 import Home from './pages/home/Home';
 import Projects from './pages/projects/Projects';
@@ -46,29 +46,35 @@ class App extends React.Component {
             <div className={classes['left-side']}>
               <ul className={classes['nav-bar']}>
                 <li>
-                  <Link to='/'>home</Link>
+                  <NavLink exact to='/' activeClassName={classes.active}>home</NavLink>
                 </li>
                 <li>
-                  <Link to='/projects'>projects</Link>
+                  <NavLink to='/projects'  activeClassName={classes.active}>projects</NavLink>
                 </li>
                 <li>
-                  <Link to='/tasks'>tasks</Link>
+                  <NavLink to='/tasks'  activeClassName={classes.active}>tasks</NavLink>
                 </li>
               </ul>
             </div>
             <div className={classes['logo-container']}>
-              <img src={logo} alt='logo'></img>
+              <Link to='/'>
+                <img src={logo} alt='logo'></img>
+              </Link>
             </div>
             <div className={classes['right-side']}>
-            {this.state.isLogged ? <Link to='/' onClick={this.clear} className={classes['log-out']}>log out</Link>
-              : <ul>
-              <li>
-                <Link to='/login'>log in</Link> 
-              </li>
-              <li>
-                <Link to='/signup'>sign up</Link>
-              </li>            
-            </ul> }
+            { this.state.isLogged 
+              ? 
+              <Link to='/' onClick={this.clear} className={classes['log-out']}>log out</Link>
+              : 
+              <ul>
+                <li>
+                  <NavLink to='/login'>log in</NavLink> 
+                </li>
+                <li>
+                  <NavLink to='/signup'>sign up</NavLink>
+                </li>            
+              </ul> 
+            }
             </div>
           </div>
           <Switch>

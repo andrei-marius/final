@@ -85,6 +85,10 @@ class Signup extends React.Component {
         this.newUser();
       }
     }
+
+    changePage = () => {
+      this.props.history.push('/login');
+    }
     
   render() {
     const { btnLoading } = this.state;
@@ -110,6 +114,7 @@ class Signup extends React.Component {
                     <label>Email</label>
                 </div>
                 <button className={classes['signup-btn']} type="submit">{btnLoading ? <i className="fa fa-circle-o-notch fa-spin"></i> : 'sign up'}</button>
+                <button className={classes['change-page']} onClick={this.changePage} type='button'>Already have an account? Log in here</button>
             </form>
         </div>
     )

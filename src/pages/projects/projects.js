@@ -17,7 +17,8 @@ class Projects extends React.Component {
       image: undefined,
       addLoading: false,
       removeLoading: undefined,
-      admin: false
+      admin: false,
+      link: ''
     };
   }
 
@@ -73,6 +74,7 @@ class Projects extends React.Component {
         body: JSON.stringify({
           title: this.state.title,
           description: this.state.description,
+          link: this.state.link,
           image: data.ids[0]
         })
       }).then(res => res.json()).then(data => {
@@ -108,27 +110,8 @@ class Projects extends React.Component {
     const { error, isLoaded, projects, addLoading, removeLoading, admin } = this.state;
     toastr.options = toastrSetup;
 
-    const style = {
-      centeredTxt: {
-        textAlign: 'center'
-      },
-      closeBtnContainer: {
-        position: 'relative',
-        marginBottom: '41px'
-      },
-      closeBtn: {
-        position: 'absolute',
-        right: '0'
-      },
-      deleteBtnContainer: {
-        position: 'absolute',
-        bottom: '0px',
-        padding: '13px'
-      }
-  }
-
     if(error) {
-      return <div style={style.centeredTxt}>Error: {error.message}</div>;
+      return <div className={classes.centered}>Error: {error.message}</div>;
     } else if(!isLoaded) {
       return (
         <div className={classes.loader}></div>
@@ -142,11 +125,12 @@ class Projects extends React.Component {
             <span>add project</span>
           </div>}
           {this.state.show ? <div className={classes['data-container']}>
-            <div style={style.closeBtnContainer} className={classes['close-btn-container']}>
-            <button style={style.closeBtn} onClick={() => this.setState({ show: false })}><i className="fa fa-times" aria-hidden="true"></i></button>
+            <div className={classes['close-btn-container']}>
+            <button onClick={() => this.setState({ show: false })}><i className="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <input onChange={this.handleChange} value={this.state.title} type="text" name="title" placeholder="Title"></input>
             <input onChange={this.handleChange} value={this.state.description} name="description" placeholder="Description ..."></input>
+            <input onChange={this.handleChange} value={this.state.link} name="link" placeholder="Link"></input>
             <input onChange={e => this.setState({ image: e.target.files[0] })} type="file"  accept="image/*" name="image"></input>
             <div className={classes['submit-btn-container']}>
               <button onClick={this.addProject}>{addLoading ? <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> : 'add project'}</button>
@@ -154,21 +138,23 @@ class Projects extends React.Component {
           </div> : null}
         </div> : null}
       {projects.map(project => (
-          <div className={classes.project} key={project._id}>
+          <div className={classes.project} key={project._id + 1}>
             <div className={classes['img-container']}>
-              <a href={project.link} target='_blank'>
+              <a href={project.link} target='_blank' rel="noopener noreferrer">
                 <img src={'https://final-b8cc.restdb.io/media/' + project.image} alt="project illustration"></img>
               </a>
             </div>
-            <div className={classes['hide-scroll-bar']}>
               <div className={classes['txt-container']}>
-                <h1>{project.title}</h1>
-                <p>{project.description}</p>
+                <div className={classes['title-container']}>
+                  <h1>{project.title}</h1>
+                </div>
+                <div className={classes['description-scrolling']}>
+                  <p>{project.description}</p>
+                </div>
               </div>
-            </div>
-            {admin ? <div className={classes['close-btn-container']} style={style.deleteBtnContainer}>
+            {admin ? <div className={classes['delete-btn-container']}>
               <button onClick={() => this.removeProject(project._id)}>{removeLoading === project._id ? <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> 
-                : <i className="fa fa-times" aria-hidden="true"></i>}</button>
+                : <i className="fa fa-trash" aria-hidden="true"></i>}</button>
             </div> : null}
           </div>
       ))}

@@ -13,6 +13,10 @@
     --red:  #d9534f;
 }
 
+.centered {
+    text-align: center;
+}
+
 .loader {
     border: 8px solid var(--ice-blue);
     border-radius: 50%;
@@ -102,6 +106,8 @@
 .close-btn-container {
     width: 100%;
     text-align: center;
+    position: relative;
+    margin-bottom: 41px;
 }
 
 .close-btn-container button {
@@ -109,6 +115,8 @@
     border: none;
     outline: none;
     cursor: pointer;
+    position: absolute;
+    right: 0;
 }
 
 .close-btn-container button i {
@@ -128,6 +136,7 @@
     border-radius: 5px;
     padding: 5px;
     outline: none;
+    outline-color: var(--white);
 }
 
 .data-container input:focus {
@@ -148,7 +157,7 @@
     width: 100%;
     padding: 10px;
     color: var(--white);
-    font-weight: 600;
+    font-weight: bold;
     border-radius: 5px;
 }
 
@@ -179,37 +188,63 @@
     display: block;
 }
 
-.hide-scroll-bar {
-    overflow: hidden;
-}
-
 .txt-container {
-    padding: 10px;
     text-align: justify;
-    max-height: 150px;
-    overflow-y: auto;
 }
 
-.txt-container::-webkit-scrollbar-track {
-	/* box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
-    background-color: var(--ice-blue)
+.title-container {
+    padding: 10px 10px 0 10px;
 }
 
-.txt-container::-webkit-scrollbar {
-	width: 5px;
-}
-
-.txt-container::-webkit-scrollbar-thumb {
-    background-color: var(--grey);
+.txt-container h1 {
+    font-size: 20px;
 }
 
 .txt-container h1, p {
     word-wrap: break-word;
 }
 
-.txt-container h1 {
-    font-size: 20px;
-    margin-bottom: 8px;
+.description-scrolling {
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.description-scrolling::-webkit-scrollbar-track {
+	/* box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+    background-color: var(--ice-blue);
+}
+
+.description-scrolling::-webkit-scrollbar {
+	width: 5px;
+}
+
+.description-scrolling::-webkit-scrollbar-thumb {
+    background-color: var(--grey);
+}
+
+.delete-btn-container {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    padding: 13px;
+}
+
+.delete-btn-container button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.delete-btn-container button i {
+    color: var(--red);
+    font-size: 1.5rem;
+}
+
+.delete-btn-container button:hover {
+    filter: brightness(1.5);
 }
 
 @media only screen and (min-width: 430px) {

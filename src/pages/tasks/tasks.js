@@ -162,31 +162,8 @@ class Tasks extends React.Component {
     const { error, isLoaded, tasks, addLoading, removeLoading, imgBig, imgClicked, userId } = this.state;
     toastr.options = toastrSetup;
 
-    const style = {
-      centeredTxt: {
-        textAlign: 'center',
-        marginTop: '25px'
-      },
-      closeBtnContainer: {
-        position: 'relative',
-        marginBottom: '41px'
-      },
-      closeBtn: {
-        position: 'absolute',
-        right: '0'
-      },
-      deleteBtnContainer: {
-        position: 'relative'
-      },
-      deleteBtn: {
-        position: 'absolute',
-        top: '-11px',
-        right: '-5px'
-      }
-    }
-
-    if(userId === null) return <div style={style.centeredTxt}>You need to log in first in order to add a task and get your problem solved</div>
-    else if(error) return <div style={style.centeredTxt}>Error: {error.message}</div>;
+    if(userId === null) return <div className={classes.centered}>You need to log in first in order to add a task and get your problem solved</div>
+    else if(error) return <div className={classes.centered}>Error: {error.message}</div>;
     else if(!isLoaded) return <div className={classes.loader}></div>
 
     return (
@@ -212,8 +189,8 @@ class Tasks extends React.Component {
           this.state.show 
           ? 
           <div className={classes['data-container']}>
-            <div className={classes['close-btn-container']} style={style.closeBtnContainer}>
-              <button style={style.closeBtn} onClick={() => this.setState({ show: false })}><i className="fa fa-times" aria-hidden="true"></i></button>
+            <div className={classes['close-btn-container']}>
+              <button onClick={() => this.setState({ show: false })}><i className="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <input 
               onChange={this.handleChange} 
@@ -254,14 +231,14 @@ class Tasks extends React.Component {
           tasks.map(filteredTask => (
           <React.Fragment key={filteredTask._id}>
             <div className={classes.task}>
-              <div className={classes['close-btn-container']} style={style.deleteBtnContainer}>
-                <button style={style.deleteBtn} onClick={() => this.removeTask(filteredTask._id)}>
+              <div className={classes['delete-btn-container']}>
+                <button onClick={() => this.removeTask(filteredTask._id)}>
                   {
                     removeLoading === filteredTask._id 
                     ? 
                     <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> 
                     : 
-                    <i className="fa fa-times" aria-hidden="true"></i>
+                    <i className="fa fa-trash" aria-hidden="true"></i>
                   }
                 </button>
               </div>

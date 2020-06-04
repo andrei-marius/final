@@ -50,8 +50,12 @@ class Login extends React.Component {
       user ? toastr.success('Logged in') : toastr.error('Incorrect password');
       localStorage.setItem("userID", user._id);
       this.setState({ isLoggedIn: true });
-      this.props.history.push("/", { logged: true });
+      this.props.history.push('/', { logged: true });
     });
+  }
+
+  changePage = () => {
+    this.props.history.push('/signup');
   }
 
   render() {
@@ -69,7 +73,8 @@ class Login extends React.Component {
                     <input onChange={this.handleChange} value={this.state.password} type="password" name="password" required/>
                     <label>Password</label>
                 </div>
-                <button className={classes['login-btn']} type="submit" name="submit">{btnLoading ? <i className="fa fa-circle-o-notch fa-spin"></i> : 'log in'}</button>
+                <button className={classes['login-btn']} type="submit">{btnLoading ? <i className="fa fa-circle-o-notch fa-spin"></i> : 'log in'}</button>
+                <button className={classes['change-page']} onClick={this.changePage} type='button'>Don't have an account? Sign up here</button>
             </form>
         </div>
     )

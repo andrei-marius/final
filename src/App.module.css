@@ -24,6 +24,7 @@
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
   font-size: 10px;
+  background-color: var(--white);
 }
 
 .nav-bar {
@@ -31,8 +32,7 @@
 }
 
 .nav-bar li {
-  display: inline;
-  position: relative;
+  display: inline-block;
 }
 
 .nav-bar li a {
@@ -40,39 +40,48 @@
   color: var(--black);
   text-transform: uppercase;
   position: relative;
-  font-weight: 600;
+  font-weight: bold;
   margin-left: 10px;
 }
 
-.nav-bar li a:after {
-  content: "";
-  display: block;
-  height: 2px;
-  left: 50%;
+/* .nav-bar li a,
+.nav-bar li a:after,
+.nav-bar li a:before {
+  transition: all .3s;
+} */
+
+/* .nav-bar li a:after {
   position: absolute;
-  background: var(--black);
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background-color: var(--black);
+  height: 2px;
+} */
+
+/* .nav-bar li a:hover:after {
+  width: 100%;
+} */
 
 .nav-bar li a:hover {
-  color: var(--blue);
+  color: var(--blue)
 }
 
-.nav-bar li a:hover:after {
+.active {
+  border-bottom: 2px solid black;
+}
+
+/* .nav-bar li a:focus:after {
   width: 100%;
-  left: 0;
-}
+} */
 
-.nav-bar li a:focus {
-  color: var(--blue);
-}
-
-.nav-bar li a:focus:after {
-  width: 100%;
-  left: 0;
-  color: var(--blue);
-}
+/* .nav-bar li a:focus {
+  color: var(--blue)
+} */
 
 .logo-container {
   width: 3rem;
@@ -80,6 +89,7 @@
 
 .logo-container img {
   display: block;
+  cursor: pointer;
 }
 
 .right-side ul {
@@ -95,10 +105,11 @@
   text-decoration: none;
   text-transform: uppercase;
   position: relative;
-  font-weight: 600;
+  font-weight: bold;
   color: var(--blue);
   padding: 5px 5px;
   margin-right: 5px;
+  z-index: 1;
 }
 
 .right-side ul li a,
@@ -139,9 +150,20 @@
   width: 100%;
 }
 
+.right-side ul li a:focus {
+  color: var(--white);
+}
+
+.right-side ul li a:focus:after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
 .log-out {
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
   text-decoration: none;
   color: var(--black);
