@@ -11,13 +11,6 @@ import toastrSetup from '../../helpers/toastr/toastr';
 import '../../helpers/toastr/toastr.css';
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      textToCopy: 'rotar.seby1@gmail.com'
-    }
-}
-
   componentDidMount() {
     if(this.props.location.state && this.props.location.state.logged) {
       this.props.history.replace('', null);
@@ -25,8 +18,8 @@ class Home extends React.Component {
     }
   }
 
-  copyText = txt => {
-    navigator.clipboard.writeText(txt);
+  copyText = () => {
+    navigator.clipboard.writeText('rotar.seby1@gmail.com');
     toastr.success('Copied! rotar.seby1@gmail.com');
   }
 
@@ -53,7 +46,7 @@ class Home extends React.Component {
             <a href='https://github.com/rotarsebastian' target='_blank' rel="noopener noreferrer">
               <img className={classes.github + ' ' + classes.icons} src={github} alt='github icon'></img>
             </a>
-            <button onClick={() => this.copyText(this.state.textToCopy)}>
+            <button onClick={this.copyText}>
               <img className={classes.gmail + ' ' + classes.icons} src={gmail} alt='gmail icon'></img>
             </button>
             <a href='https://www.facebook.com/RotarSebastian1' target='_blank' rel="noopener noreferrer">
