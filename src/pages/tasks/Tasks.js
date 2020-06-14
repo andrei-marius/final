@@ -9,6 +9,7 @@ import Comment from '../../components/comment/Comment';
 class Tasks extends React.Component {
   constructor(props) {
     super(props);
+    this.inputFile = React.createRef();
     this.state = {
       error: null,
       isLoaded: false,
@@ -70,39 +71,53 @@ class Tasks extends React.Component {
     this.setState({ [name]: value });
   }
 
-  addTask = () => {
+  addTask = async () => {
       this.setState({ addLoading: true });
       const formData = new FormData();
-      formData.append('image', this.state.image, this.state.image.name);
-      fetch("https://final-b8cc.restdb.io/media", {
-        method: 'POST',
-        headers: {  
-          "x-apikey": "5eb41a9ba020071c9ca8135c",
-        },
-        body: formData
-      }).then(res => res.json()).then(data => {
-      fetch("https://final-b8cc.restdb.io/rest/tasks", {
+      let response, image;
+
+      if (this.state.image) {
+        formData.append('image', this.state.image, this.state.image.name);
+        response = await fetch("https://final-b8cc.restdb.io/media", {
+          method: 'POST',
+          headers: {  
+            "x-apikey": "5eb41a9ba020071c9ca8135c",
+          },
+          body: formData
+        });
+
+        image = await response.json();
+      }
+
+      let requestObj = {
+        title: this.state.title,
+        description: this.state.description,
+        userId: this.state.userId
+      };
+
+      if(image && image.hasOwnProperty('ids')) {
+        requestObj.image = image.ids[0];
+      }
+
+      const response2 = await fetch("https://final-b8cc.restdb.io/rest/tasks", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
           "x-apikey": "5eb41a9ba020071c9ca8135c",
           "cache-control": "no-cache"
         },
-        body: JSON.stringify({
-          title: this.state.title,
-          description: this.state.description,
-          image: data.ids[0],
-          userId: this.state.userId
-        })
-      }).then(res => res.json()).then(data => {
-        this.setState({ addLoading: false });
-        const newTasks = [ ...this.state.tasks ];
-        const newTask = { _id: data._id, title: data.title, description: data.description, image: data.image };
-        newTasks.unshift(newTask);
-        this.setState({ tasks: newTasks });
-        toastr.success('New task added');
-      })
-    })
+        body: JSON.stringify(requestObj)
+      });
+      const response2data = await response2.json();
+
+      this.setState({ addLoading: false });
+      const newTasks = [ ...this.state.tasks ];
+      const newTask = { _id: response2data._id, title: response2data.title, description: response2data.description, image: response2data.image };
+      newTasks.unshift(newTask);
+      this.setState({ tasks: newTasks });
+      toastr.success('New task added');
+      this.inputFile.current.value = '';
+      this.setState({ title: '', description: '', image: undefined });
   }
 
   checkTask = () => {
@@ -210,6 +225,7 @@ class Tasks extends React.Component {
               type="file"
               accept="image/*"
               name="image"
+              ref={this.inputFile}
             />
             <div className={classes['submit-btn-container']}>
               <button onClick={this.checkTask}>
@@ -247,8 +263,14 @@ class Tasks extends React.Component {
 
               <p>{filteredTask.description}</p>
 
-              <img className={classes['small-img']} onClick={() => this.makeImgBig(filteredTask._id)} src={'https://final-b8cc.restdb.io/media/' + filteredTask.image} alt='problem illustration'></img>
-              
+              { 
+                filteredTask.image
+                ?
+                <img className={classes['small-img']} onClick={() => this.makeImgBig(filteredTask._id)} src={'https://final-b8cc.restdb.io/media/' + filteredTask.image} alt='problem illustration'></img>
+                :
+                null
+              }
+
               {
                 imgClicked === filteredTask._id && imgBig 
                 ? 

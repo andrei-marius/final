@@ -7,6 +7,7 @@ import '../../helpers/toastr/toastr.css';
 class Projects extends React.Component {
   constructor(props) {
     super(props);
+    this.inputFile = React.createRef();
     this.state = {
       error: null,
       isLoaded: false,
@@ -84,6 +85,8 @@ class Projects extends React.Component {
         newProjects.unshift(newProject);
         this.setState({ projects: newProjects });
         toastr.success('New project added');
+        this.inputFile.current.value = '';
+        this.setState({ title: '', description: '', link: '', image: undefined });
       })
     })
   }
@@ -131,7 +134,7 @@ class Projects extends React.Component {
             <input onChange={this.handleChange} value={this.state.title} type="text" name="title" placeholder="Title"></input>
             <input onChange={this.handleChange} value={this.state.description} name="description" placeholder="Description ..."></input>
             <input onChange={this.handleChange} value={this.state.link} name="link" placeholder="Link"></input>
-            <input onChange={e => this.setState({ image: e.target.files[0] })} type="file"  accept="image/*" name="image"></input>
+            <input onChange={e => this.setState({ image: e.target.files[0] })} type="file"  accept="image/*" name="image" ref={this.inputFile}></input>
             <div className={classes['submit-btn-container']}>
               <button onClick={this.addProject}>{addLoading ? <i className="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> : 'add project'}</button>
             </div>
